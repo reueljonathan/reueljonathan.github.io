@@ -1,6 +1,6 @@
 @font-face{
 	font-family: pixelTitle;
-	src: url(../fonts/8-BIT_WONDER.ttf);
+	src: url(../fonts/UpheavalPro.ttf);
 }
 
 @font-face{
@@ -23,7 +23,8 @@ html, body{
 
 h1, h2, h3, h4, h5, h6{
 	padding: 1% 0;
-	font-family: "pixelTitle";	
+	font-family: "pixelTitle";
+	font-size: 40px;
 }
 
 footer{
@@ -51,6 +52,7 @@ footer{
 	width: 15%;
 	height: 100%;
 	font-family: "pixelTitle";
+	font-size: 20px;
 	z-index: 1;
 }
 
