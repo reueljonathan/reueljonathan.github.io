@@ -1,3 +1,13 @@
+@font-face{
+	font-family: pixelTitle;
+	src: url(../fonts/8-BIT_WONDER.ttf);
+}
+
+@font-face{
+	font-family: pixel;
+	src: url(../fonts/FreePixel.ttf);
+}
+
 *{
 	margin: 0px;
 }
@@ -6,8 +16,14 @@ html, body{
 	width: 100%;
 	height: 100%;
 	background: #f4a408;
-	color: white;
+	color: #000000;
 	overflow: hidden;
+	font-family: "pixel";
+}
+
+h1, h2, h3, h4, h5, h6{
+	padding: 1% 0;
+	font-family: "pixelTitle";	
 }
 
 footer{
@@ -34,7 +50,7 @@ footer{
 	left: 0;
 	width: 15%;
 	height: 100%;
-
+	font-family: "pixelTitle";
 	z-index: 1;
 }
 
@@ -68,6 +84,7 @@ footer{
 
 .screen{
 	margin-left:15%;
+	padding: 5%;
 }
 
 .content{
