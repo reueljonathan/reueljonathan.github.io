@@ -44,6 +44,7 @@ footer{
 }
 
 #menu{
+	padding-top: 15%;
 	background: #ea7c14;
 	position: absolute;
 	top:0;
@@ -51,6 +52,7 @@ footer{
 	width: 15%;
 	height: 100%;
 	font-family: "pixelTitle";
+	font-size: 40px;
 	z-index: 1;
 }
 
