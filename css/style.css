@@ -15,15 +15,18 @@
 html, body{
 	width: 100%;
 	height: 100%;
-	background: #f4a408;
-	color: #000000;
+	background: rgb(250,250,250);
+	color: #000;
 	overflow: hidden;
 	font-family: "pixel";
+	position: absolute;
+	top: 0;
 }
 
 h1, h2, h3, h4, h5, h6{
 	padding: 1% 0;
 	font-family: "pixelTitle";	
+	font-size: 45px;
 }
 
 footer{
@@ -31,6 +34,38 @@ footer{
 	position: absolute;
 	bottom: 0;
 	color: #000000;
+}
+
+
+
+.sliderButton{
+	width: 40px;
+	height: 40px;
+	border: 4px solid #000000;
+	background: white;
+	font-family: "pixelTitle";
+	background: #f4a408;
+	color: #000000;
+	cursor: pointer;
+
+	-webkit-transition: all 0.25s ease;
+	-moz-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+}
+
+.sliderButton:hover{
+	width: 50px;
+	height: 40px;
+	border: 4px solid #000000;
+	background: white;
+	font-family: "pixelTitle";
+	background: #ea7c14;
+	color: #000000;
+	cursor: pointer;
+
+	-webkit-transition: all 0.25s ease;
+	-moz-transition: all 0.25s ease;
+	transition: all 0.25s ease;
 }
 
 .text-right{
@@ -45,7 +80,7 @@ footer{
 
 #menu{
 	padding-top: 15%;
-	background: #ea7c14;
+	background: rgb(250,190,00);
 	position: absolute;
 	top:0;
 	left: 0;
@@ -87,6 +122,15 @@ footer{
 .screen{
 	margin-left:15%;
 	padding: 5%;
+	width: 85%;
+	height: 100%;
+	display: none;
+	position: absolute;
+	top: 0;
+}
+
+.screen-active{
+	display: block;
 }
 
 .content{
@@ -95,4 +139,61 @@ footer{
 
 canvas{
 	border: 1px solid #ffffff;
+}
+
+#photoShower{
+
+}
+
+#photoShower #imageDiv{
+	margin: 10px 0px;
+}
+
+#photoShower #imageDiv .imgThumb{
+	border: 5px solid rgba(0,0,0,1);
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+}
+
+#photoShower #imageDiv .imgThumb:hover{	
+
+	-webkit-animation: selectPhoto 0.5s;
+	animation: selectPhoto 0.5s;
+
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+#photoShower #imageDiv #imgFullDiv{
+	border: 0;
+}
+
+#photoShower #imageDiv #imgFullDiv img{
+	border: 10px solid #000;
+	background: #000;
+	padding: 5px;
+}
+
+@keyframes selectPhoto{
+	from{
+		border: 5px solid #ea7c14;
+	}
+	50%{
+		border: 5px solid orange;
+	}	
+	to{
+		border: 5px solid #ea7c14;
+	}
+}
+
+@-webkit-keyframes selectPhoto{
+	from{
+		border: 5px solid #ea7c14;
+	}
+	50%{
+		border: 5px solid orange;
+	}	
+	to{
+		border: 5px solid #ea7c14;
+	}
 }
