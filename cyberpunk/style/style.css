@@ -1,8 +1,11 @@
 @font-face{
+	font-family: "FreePixel";
+	src: url('../fonts/FreePixel.ttf');
+}
+@font-face{
 	font-family: "BitWonder";
 	src: url('../fonts/8-BIT_WONDER.ttf');
 }
-
 *{
 	margin: 0;
 }
