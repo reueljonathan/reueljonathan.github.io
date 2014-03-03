@@ -2,10 +2,7 @@
 	font-family: "BitWonder";
 	src: url('../fonts/8-BIT_WONDER.ttf');
 }
-@font-face{
-	font-family: "FreePixel";
-	src: url('../fonts/FreePixel.ttf');
-}
+
 *{
 	margin: 0;
 }
