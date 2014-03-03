@@ -23,6 +23,21 @@ html, body{
 	top: 0;
 }
 
+a{
+	text-decoration: none;
+	color: #f4a408;
+}
+
+a:hover{
+	text-decoration: underline;		
+}
+
+iframe{
+	border: none;
+	width: 800px;
+	height: 600px;
+}
+
 h1, h2, h3, h4, h5, h6{
 	padding: 1% 0;
 	font-family: "pixelTitle";	
@@ -36,7 +51,10 @@ footer{
 	color: #000000;
 }
 
-
+.bold{
+	font-family: "pixelTitle";
+	font-size: 20px;
+}
 
 .sliderButton{
 	width: 40px;
@@ -91,10 +109,6 @@ footer{
 	z-index: 1;
 }
 
-#menu a{
-	text-decoration: none;
-}
-
 #menu div{
 	width: 80%;
 	padding: 5%;
@@ -115,22 +129,36 @@ footer{
 	transition: all ease 0.25s;
 }
 
+#menu a:hover{
+	text-decoration: none;		
+}
+
 #menu ul a{
 	text-decoration: none;
 }
 
+.screen-out{
+	top: 100%;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
 .screen{
 	margin-left:15%;
-	padding: 5%;
+	padding: 1%;
 	width: 85%;
 	height: 100%;
-	display: none;
 	position: absolute;
-	top: 0;
+	top: 100%;
+
+
 }
 
 .screen-active{
-	display: block;
+	top: 0;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
 }
 
 .content{
@@ -153,9 +181,7 @@ canvas{
 	-webkit-transition: all 0.25s ease;
 	-webkit-filter: grayscale(100%);
 	-moz-transition: all 0.25s ease;
-	-moz-filter: grayscale(100%);
 	transition: all 0.25s ease;
-	filter: grayscale(100%);
 }
 
 .imgShower:hover{
@@ -163,9 +189,7 @@ canvas{
 
 	-webkit-filter: grayscale(0%);
 	-webkit-transition: all 0.25s ease;
-	-moz-filter: grayscale(0%);
 	-moz-transition: all 0.25s ease;
-	filter: grayscale(0%);
 	transition: all 0.25s ease;
 }
 
@@ -177,4 +201,16 @@ canvas{
 	opacity: 0.5;
 	color: #fff;
 }
+#home div, #contact div{
+	width: 600px;
+	margin-left: 50%;
+	position: relative;
+	left: -300px;
+}
 
+#games div{
+	width: 800px;
+	margin-left: 50%;
+	position: relative;
+	left: -400px;
+}
