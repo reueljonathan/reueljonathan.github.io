@@ -29,10 +29,21 @@
 			<button id="backInfoBtn">Back to Menu</button>
 		</div>
 	</div>
+	
 	<div id="game" class="screen-false">
-		Game
-		<canvas id="game" width="800" height="800" ></canvas>	
+		<canvas id="gameCanvas" width="800" height="800"></canvas>	
+		<div id="hud">
+			<table>
+				<tr>
+					<td class="left">Player 1: <span id="score">100</span>%</td>
+					<td id="time" class="center"></td>
+					<td class="right">Player 2: <span id="score">100</span>%</td>
+				</tr>
+			</table>
+		</div>	
+		<div id="preCounter" class="title center"></div>	
 	</div>	
+	
 	<div id="credits" class="screen-false center">
 		<div id="title" class="title center">CREDITS</div>
 		<div class="center">
@@ -67,5 +78,13 @@
 	</div>
 	
 	<script src="js/main.js"></script>
+	<script src="js/gamvas.js"></script>
+	<script src="js/uniqueAnimation.js"></script>
+	<script src="js/actors/door.js"></script>
+	<script src="js/actors/ground.js"></script>
+	<script src="js/actors/bullet.js"></script>
+	<script src="js/actors/redPlayer.js"></script>
+	<script src="js/actors/bluePlayer.js"></script>
+	<script src="js/states/gameplay.js"></script>
 </body>
 </html>
