@@ -74,21 +74,15 @@ gameplay = gamvas.State.extend({
 		timerHud.innerHTML = time;
 
 		preCounter(0);
-	},
-	draw: function(){
-		//this.camera.move(0,1);
+
+
+		
 	},
 	collide: function(a, b){
 		return !(a.x > b.x+b.w ||
 				a.x+a.w < b.x ||
 				a.y > b.y+b.h ||
 				a.y+a.h < b.y);
-	},
-	collideBottom: function(a,b){
-		return (!(a.x < b.x) &&
-				!(a.x+a.w > b.x+b.w) &&
-				a.y+a.h > b.y &&
-				a.y+a.h < b.y+b.h);
 	}
 });
 

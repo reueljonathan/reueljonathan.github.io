@@ -74,6 +74,10 @@ button{
 	text-align: right;
 }
 
+
+.small{
+	font-size: 30px;
+}
 /* MENU */
 
 #menu{

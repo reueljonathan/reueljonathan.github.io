@@ -12,8 +12,9 @@ var doc = document,
 	//Buttons Credits
 	backInfoBtn = doc.getElementById("backInfoBtn"),
 	backCreditsBtn = doc.getElementById("backCreditsBtn"),
-	gameInitialized = false;
+	gameInitialized = false,
 	//timer.innerText = totalTime;
+	gamePaused = true;
 
 doc.addEventListener("webkitTransitionEnd", function(e){
 	actualScreen.setAttribute("class", "screen-false");

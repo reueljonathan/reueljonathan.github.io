@@ -166,7 +166,8 @@ bluePlayerActor = gamvas.Actor.extend({
 	bullets:[],
 	numBullets:0,
 	lastDirection: 1,
-	fired: false,
+	fired: null,
+	enemy:null,
 	create: function(name, x, y){
 		this._super(name,x,y);
 
@@ -191,7 +192,6 @@ bluePlayerActor = gamvas.Actor.extend({
 			this.resource.getImage("./img/game/blueJump.png"), 28,59,4,1);
 		this.addAnimation(this.jumpAnimation);
 
-		
 		
 		
 
