@@ -1,5 +1,4 @@
 var time = 10,
-	timerHud = doc.getElementById("time"),
 	preCounterHud = doc.getElementById("preCounter"),
 	preCounterMsg = ["3","2","1","GO", ""],
 	gamePaused= true;
@@ -13,20 +12,7 @@ function preCounter(i){
 			preCounter(i);
 		}, 1000);
 	}else{
-		countdown();
 		gamePaused = false;
-	}
-}
-
-function countdown(){
-	if(time > 0){
-		time--;
-		timerHud.innerHTML = time;
-		setTimeout(function(){
-			return countdown(time, timerHud);
-		}, 1000);		
-	}else{
-		return time;
 	}
 }
 
@@ -34,7 +20,6 @@ var gravity = 1;
 gameplay = gamvas.State.extend({
 	preCounter: 3,
 	time: 10,
-	timerHud: null,
 	grounds:[],
 	init: function(){
 		this.camera.setPosition(400,400);
@@ -61,22 +46,34 @@ gameplay = gamvas.State.extend({
 		}
 
 		this.bluePlayer = new bluePlayerActor("bluePlayer", 400,0);
+		this.redPlayer = new redPlayerActor("redPlayer", 450,0);
+
+		this.bluePlayer.enemy = this.redPlayer;
+		this.redPlayer.enemy = this.bluePlayer;
+		
+		this.addActor(this.redPlayer);
+		this.registerInputEvents(this.redPlayer);
 		this.addActor(this.bluePlayer);
 		this.registerInputEvents(this.bluePlayer);
-
-		//this.redPlayer = new redPlayerActor("redPlayer", 450,0);
-		//this.addActor(this.redPlayer);
-		//this.registerInputEvents(this.redPlayer);
 
 		//this.ground = new groundActor("g",50,400);
 		//this.addActor(this.ground);
 
-		timerHud.innerHTML = time;
 
 		preCounter(0);
 
 
 		
+	},
+	onKeyUp: function(k){
+		if(k == gamvas.key.P){
+			gamePaused = !gamePaused;
+		}
+	},
+	draw: function(){
+		if(!gamePaused){
+			this.camera.move(0,1);
+		}
 	},
 	collide: function(a, b){
 		return !(a.x > b.x+b.w ||

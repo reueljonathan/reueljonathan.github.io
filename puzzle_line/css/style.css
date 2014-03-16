@@ -1,0 +1,136 @@
+@font-face{
+	font-family: "Square";
+	src: url("../fonts/Square.ttf");
+}
+
+*{
+	margin: 0;
+}
+
+html, body{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font-family: "Square";
+
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#gameDiv{
+	height: 700px;
+}
+
+footer{
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+button{
+	border: 3px solid #000;
+	background: none;
+	font-family: "Square";
+	font-size: 2em;
+
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+button:hover{
+	background: #000;
+	color: #fff;
+
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+a, a:hover, a:visited{
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover{
+	color: #f00;
+}
+
+div{
+	width: 100%;
+}
+
+.center{
+	text-align: center;
+}
+.left{
+	text-align: left;
+}
+.right{
+	text-align: right;
+}
+
+
+.title{
+	font-size: 4em;
+}
+
+#menu, #tutorial{
+	height: inherit;
+}
+
+#menu .title{
+	position: absolute;
+	top: 80px;
+}
+
+#menu #buttons{
+	position: absolute;
+	top: 300px;	
+}
+
+#menu #buttons button{
+	margin-bottom: 10px;
+}
+
+
+@keyframes moveMouse{
+	0%{
+		transform: translate(250px, 200px);
+	}
+	33%{
+		transform: translate(100px,0px);	
+	}
+	66%{
+		transform: translate(500px,0px);	
+	}
+	100%{
+		transform: translate(250px, 200px);
+	}
+}
+
+#game{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	/*margin-left: 50%;
+	left: -500px;*/
+}
+
+#rules{
+
+	margin-top: 1%;
+	margin-bottom: 1%;
+	text-align: center;
+}
+
+#hud{
+	font-size: 4em;
+}
+

@@ -1,4 +1,3 @@
-
 groundActor = gamvas.Actor.extend({
 	resource: null,
 	rect: null,

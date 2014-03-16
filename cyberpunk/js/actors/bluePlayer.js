@@ -1,103 +1,114 @@
 bluePlayerBrain = gamvas.ActorState.extend({
+	i:0,
 	init: function(){
 		this.state =  gamvas.state.getCurrentState();
 
 	},
 	update: function(t){
-		if(!this.actor.isOnGround){
-			for(var i = 0; i<this.state.grounds.length; i++){
-				if(this.state.collide(this.actor.rect, this.state.grounds[i].rect)){
-					this.actor.position.y = this.state.grounds[i].position.y - 55;
-					this.actor.jumping = false;
-					this.actor.speedY = 0;
-					this.actor.isOnGround= true;
-					this.actor.lastGroundIndex = i;
-					i= this.state.grounds.length;
+		if(!gamePaused){
 
-					this.actor.rect.w = 32;
-					this.actor.rect.h = 55;
-					/*if(this.actor.lastDirection == 1){
-						this.actor.setAnimation("defeat");
-					}else if(this.actor.lastDirection == -1){
-						this.actor.setAnimation("defeat");
-					}*/
-					this.actor.setAnimation("rest");
+			for(i=0; i<this.actor.enemy.bullets.length; i++){
+				if(this.state.collide(this.actor.rect, this.actor.enemy.bullets[i].rect) && this.actor.hp > 0){
+					this.actor.hp -=10;
+
 				}
 			}
-		}
 
-		if(gamvas.key.isPressed(gamvas.key.D)){
-			this.actor.rect.w = 42;
-			this.actor.rect.h = 55;
-			this.actor.speedX = 8;
-			//this.actor.setAnimation("runningRight");
+			if(!this.actor.isOnGround){
+				for(i = 0; i<this.state.grounds.length; i++){
+					if(this.state.collide(this.actor.rect, this.state.grounds[i].rect)){
+						this.actor.position.y = this.state.grounds[i].position.y - 55;
+						this.actor.jumping = false;
+						this.actor.speedY = 0;
+						this.actor.isOnGround= true;
+						this.actor.lastGroundIndex = i;
+						i= this.state.grounds.length;
 
-			this.actor.lastDirection = 1;
-
-			this.actor.defeatAnimation.setFrameList([
-				0,1,2,3,4,5,6,7,8,9]);
-
-			this.actor.jumpAnimation.setFrameList([0,1]);
-			this.actor.runAnimation.setFrameList(
-				[0,1,2,3,4,5,6,7]);
-			this.actor.restAnimation.setFrameList([0]);
-
-			if(!this.actor.jumping){
-				this.actor.setAnimation("run");
+						this.actor.rect.w = 32;
+						this.actor.rect.h = 55;
+						/*if(this.actor.lastDirection == 1){
+							this.actor.setAnimation("defeat");
+						}else if(this.actor.lastDirection == -1){
+							this.actor.setAnimation("defeat");
+						}*/
+						this.actor.setAnimation("rest");
+					}
+				}
 			}
-		}
-		if(gamvas.key.isPressed(gamvas.key.A)){
-			this.actor.rect.w = 42;
-			this.actor.rect.h = 55;
-			this.actor.speedX = -8;
-			//this.actor.setAnimation("runningLeft");
-			this.actor.lastDirection = -1;
 
-			this.actor.defeatAnimation.setFrameList([
-				10,11,12,13,14,15,16,17,18,19]);
+			if(gamvas.key.isPressed(gamvas.key.D)){
+				this.actor.rect.w = 42;
+				this.actor.rect.h = 55;
+				this.actor.speedX = 8;
+				//this.actor.setAnimation("runningRight");
 
-			this.actor.jumpAnimation.setFrameList([2,3]);
-			this.actor.runAnimation.setFrameList(
-				[8,9,10,11,12,13,14,15]);
-			this.actor.restAnimation.setFrameList([1]);
+				this.actor.lastDirection = 1;
 
-			if(!this.actor.jumping){
-				this.actor.setAnimation("run");
+				this.actor.defeatAnimation.setFrameList([
+					0,1,2,3,4,5,6,7,8,9]);
+
+				this.actor.jumpAnimation.setFrameList([0,1]);
+				this.actor.runAnimation.setFrameList(
+					[0,1,2,3,4,5,6,7]);
+				this.actor.restAnimation.setFrameList([0]);
+
+				if(!this.actor.jumping){
+					this.actor.setAnimation("run");
+				}
 			}
-		}
-		if(gamvas.key.isPressed(gamvas.key.W) &&
-			!this.actor.jumping){
-			this.actor.speedY = -15;
-			this.actor.jumping = true;
-			this.actor.isOnGround = false;
+			if(gamvas.key.isPressed(gamvas.key.A)){
+				this.actor.rect.w = 42;
+				this.actor.rect.h = 55;
+				this.actor.speedX = -8;
+				//this.actor.setAnimation("runningLeft");
+				this.actor.lastDirection = -1;
 
-			this.actor.setAnimation("jump");
+				this.actor.defeatAnimation.setFrameList([
+					10,11,12,13,14,15,16,17,18,19]);
 
-		}
+				this.actor.jumpAnimation.setFrameList([2,3]);
+				this.actor.runAnimation.setFrameList(
+					[8,9,10,11,12,13,14,15]);
+				this.actor.restAnimation.setFrameList([1]);
 
-		if(this.actor.jumping){
-			this.actor.speedY += gravity;
-			this.actor.rect.w = 28;
-			this.actor.rect.h = 59;
-			/*if(this.actor.lastDirection == 1){
-				this.actor.setAnimation("jumpRight");
-			}else if(this.actor.lastDirection == -1){
-				this.actor.setAnimation("jumpLeft");
-			}*/
-			
-		}		
-		this.actor.move(this.actor.speedX,this.actor.speedY);
+				if(!this.actor.jumping){
+					this.actor.setAnimation("run");
+				}
+			}
+			if(gamvas.key.isPressed(gamvas.key.W) &&
+				!this.actor.jumping){
+				this.actor.speedY = -15;
+				this.actor.jumping = true;
+				this.actor.isOnGround = false;
 
-		if(!this.state.collide(this.actor.rect, this.state.grounds[this.actor.lastGroundIndex].rect)){
-			this.actor.jumping = true;
-			this.actor.isOnGround = false;
-		}
-		this.actor.rect = {x:this.actor.position.x, y:this.actor.position.y, w:32, h:55};
+				this.actor.setAnimation("jump");
 
-		for (var i = 0; i < this.actor.bullets.length; i++) {
-			if(this.outOfScreen(this.actor.bullets[i].rect)){
-				this.state.removeActor(this.actor.bullets[i]);
-				this.actor.numBullets--;
+			}
+
+			if(this.actor.jumping){
+				this.actor.speedY += gravity;
+				this.actor.rect.w = 28;
+				this.actor.rect.h = 59;
+				/*if(this.actor.lastDirection == 1){
+					this.actor.setAnimation("jumpRight");
+				}else if(this.actor.lastDirection == -1){
+					this.actor.setAnimation("jumpLeft");
+				}*/
+				
+			}		
+			this.actor.move(this.actor.speedX,this.actor.speedY);
+
+			if(!this.state.collide(this.actor.rect, this.state.grounds[this.actor.lastGroundIndex].rect)){
+				this.actor.jumping = true;
+				this.actor.isOnGround = false;
+			}
+			this.actor.rect = {x:this.actor.position.x, y:this.actor.position.y, w:32, h:55};
+
+			for (i = 0; i < this.actor.bullets.length; i++) {
+				if(this.outOfScreen(this.actor.bullets[i].rect)){
+					this.state.removeActor(this.actor.bullets[i]);
+					this.actor.numBullets--;
+				}
 			}
 		}
 	},
@@ -168,14 +179,13 @@ bluePlayerActor = gamvas.Actor.extend({
 	lastDirection: 1,
 	fired: null,
 	enemy:null,
+	lifeHud: doc.getElementById("hp1"),
 	create: function(name, x, y){
-		this._super(name,x,y);
-
-		
+		this._super(name,x,y);		
 
 		this.resource = gamvas.state.getCurrentState().resource;
 
-		this.defeatAnimation = new gamvas.Animation("defeat",
+		this.defeatAnimation = new uniqueAnimation("defeat",
 			this.resource.getImage("./img/game/blueDefeat.png"), 57,55,20,4);
 		this.addAnimation(this.defeatAnimation);
 
@@ -191,9 +201,8 @@ bluePlayerActor = gamvas.Actor.extend({
 		this.jumpAnimation = new gamvas.Animation("jump",
 			this.resource.getImage("./img/game/blueJump.png"), 28,59,4,1);
 		this.addAnimation(this.jumpAnimation);
-
-		
-		
+		this.jumpAnimation.setFrameList([0,1]);		
+		this.setAnimation("jump");
 
 		this.blueBulletImageR = this.resource.getImage("./img/game/blueShootRight.png");
 		this.blueBulletImageL = this.resource.getImage("./img/game/blueShootLeft.png");

@@ -1,7 +1,9 @@
 bulletBrain = gamvas.ActorState.extend({
 	update: function (t) {
-		this.actor.move(30*this.actor.direction,0);
-		this.actor.rect = {x:this.actor.position.x, y:this.actor.position.y, w:17, h:5};
+		if (!gamePaused) {
+			this.actor.move(30*this.actor.direction,0);
+			this.actor.rect = {x:this.actor.position.x, y:this.actor.position.y, w:17, h:5};
+		}
 	}
 });
 bulletActor = gamvas.Actor.extend({
