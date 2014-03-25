@@ -104,10 +104,13 @@ gameplay = gamvas.State.extend({
 		this.clearColor = "rgba(0,0,0,0)";
 		this.table = new Array(new Array(),new Array(),new Array(),new Array(),new Array(),new Array());
 		this.numPieces = 0;
+		this.creationTime = 20;
+		this.elapsedTime = 0;
 		this.shadow = new gamvas.Image(this.resource.getImage("./img/shadow.png"));
 		this.back = new gamvas.Image(this.resource.getImage("./img/table.png"));
 		this.pieces = this.resource.getImage("./img/ball.svg");
-		
+		this.active = new gamvas.Image(this.resource.getImage("./img/active.png"),0,0);
+
 		for(var i =0; i<6; i++){
 			for(var j =0; j<6; j++){
 				this.table[i].push({x: i*80, y:j*80, w:80, h:80, c:null, active: false});
@@ -115,9 +118,9 @@ gameplay = gamvas.State.extend({
 		}
 		this.table[0][0] = this.table[0][5] = this.table[5][0] = this.table[5][5] = null;
 
-		this.active = new gamvas.Image(this.resource.getImage("./img/active.png"),0,0);
+		
 
-		this.circle = new circle("c",120,120,this.pieces,Math.round(Math.random()*10)%10);
+		/*this.circle = new circle("c1",120,120,this.pieces,Math.round(Math.random()*10)%10);
 		this.table[1][1].c = this.circle;
 		this.addActor(this.circle);
 		this.registerInputEvents(this.circle);
@@ -132,10 +135,10 @@ gameplay = gamvas.State.extend({
 		this.addActor(this.circle3);
 		this.registerInputEvents(this.circle3);
 
-		this.circle4 = new circle("c4",(4*80)+40,(4*80)+40,this.pieces,Math.round(Math.random()*10)%10);
+		/*this.circle4 = new circle("c4",(4*80)+40,(4*80)+40,this.pieces,Math.round(Math.random()*10)%10);
 		this.table[4][4].c = this.circle4;
 		this.addActor(this.circle4);
-		this.registerInputEvents(this.circle4);
+		this.registerInputEvents(this.circle4);*/
 	},
 	preDraw: function(){
 		this.back.draw();
@@ -151,6 +154,31 @@ gameplay = gamvas.State.extend({
 		}
 
 		pointsHud.innerHTML = gamvas.screen.getFPS();
+	},
+	draw:function(){
+		console.log("hey");
+		if(this.elapsedTime >= this.creationTime){
+			var i=0,j=0;
+
+			if(this.numPieces < 30){
+				while((i==0 && j==0) ||
+						(i==5 && j==0) ||
+						(i==0 && j==5) ||
+						(i==5 && j==5) ||
+						this.table[i][j].c != null){
+					i = (Math.round(Math.random()*10))%6;
+					j = (Math.round(Math.random()*10))%6;	
+				}
+
+				this.table[i][j].c = new circle("c"+this.numPieces, (i*80)+40,(j*80)+40,this.pieces,Math.round(Math.random()*10)%9);
+				this.addActor(this.table[i][j].c);
+				this.numPieces++;
+			}
+			this.elapsedTime = 0;
+		}else{
+			this.elapsedTime+=10;
+			console.log(this.elapsedTime);
+		}
 	},
 	postDraw: function(){
 		this.shadow.draw();
