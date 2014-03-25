@@ -134,3 +134,56 @@ div{
 	font-size: 4em;
 }
 
+#lightSquare{
+	color: #ddd;
+}
+
+#lightSquare:hover{
+	cursor: pointer;
+	color: rgb(255,150,50);
+}
+
+#square{
+	border: 4px solid rgb(255,150,50);
+	width: 392px;
+	height: 392px;
+	margin-left: 50%;
+	position: relative;
+	top:-504px;
+	left: -200px;
+	opacity: 0;
+
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+#lightSquare:hover ~ #square{
+	opacity: 1;
+	-webkit-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+@keyframes changeLevel{
+	0%{
+		opacity: 0;
+		top:0px;
+	}
+	50%{
+		opacity: 1;
+		top:240px;
+	}
+	100%{
+		opacity: 0;
+		top:480px;
+	}
+}
+
+#level{
+	position: absolute;
+	top:-600px;
+	webkit-animation: changeLevel 4s;	
+	moz-animation: changeLevel 4s;
+	animation: changeLevel 4s;
+}
