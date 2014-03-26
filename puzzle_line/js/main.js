@@ -39,25 +39,29 @@ function counter(){
 circleBrain = gamvas.ActorState.extend({
 	value: 0,
 	update: function(){
-		if(this.actor.scaleFactor < 1){
-			this.actor.scale(0.1);
+		if(!this.actor.alive){
+			if(this.actor.scaleFactor > 0){
+				this.actor.scale(-0.05);
+			}else{
+				this.actor.state.removeActor(this);
+			}	
+		}else{
+			if(this.actor.scaleFactor < 1){
+				this.actor.scale(0.025);
+			}
 		}
+		
 
-		if(this.actor.position.x > this.actor.newPos.x){
+		if(this.actor.isMoving && this.actor.position.x > this.actor.newPos.x ){
 			this.actor.move(-10,0);
-			//this.actor.rotation = this.actor.position.y > 240 ? Math.atan((240-this.actor.position.x)/(240-this.actor.position.y))*-1 : Math.PI-Math.atan((240-this.actor.position.x)/(240-this.actor.position.y));
-		}
-		if(this.actor.position.x < this.actor.newPos.x){
+		}else if(this.actor.isMoving && this.actor.position.x < this.actor.newPos.x ){
 			this.actor.move(10,0);
-			//this.actor.rotation = this.actor.position.y > 240 ? Math.atan((240-this.actor.position.x)/(240-this.actor.position.y))*-1 : Math.PI-Math.atan((240-this.actor.position.x)/(240-this.actor.position.y));
-		}
-		if(this.actor.position.y > this.actor.newPos.y){
+		}else if(this.actor.isMoving && this.actor.position.y > this.actor.newPos.y ){
 			this.actor.move(0,-10);
-			//this.actor.rotation = this.actor.position.y > 240 ? Math.atan((240-this.actor.position.x)/(240-this.actor.position.y))*-1 : Math.PI-Math.atan((240-this.actor.position.y)/(240-this.actor.position.x));
-		}
-		if(this.actor.position.y < this.actor.newPos.y){
+		}else if(this.actor.isMoving && this.actor.position.y < this.actor.newPos.y ){
 			this.actor.move(0,10);
-			//this.actor.rotation = this.actor.position.y > 240 ? Math.atan((240-this.actor.position.x)/(240-this.actor.position.y))*-1 : Math.PI-Math.atan((240-this.actor.position.x)/(240-this.actor.position.y));
+		}else{
+			this.actor.isMoving = false;
 		}
 
 		if (this.actor.position.x > 240) {
@@ -73,8 +77,6 @@ circleBrain = gamvas.ActorState.extend({
 				this.actor.rotation = Math.atan((240-this.actor.position.x)/(this.actor.position.y-240));
 			}
 		}
-
-
 	},
 });
 circle = gamvas.Actor.extend({
@@ -86,8 +88,11 @@ circle = gamvas.Actor.extend({
 		this.resource = gamvas.state.getCurrentState().resource;
 		this.rotation = this.position.y > 240 ? Math.atan((240-this.position.x)/(240-this.position.y))*-1 : Math.PI-Math.atan((240-this.position.x)/(240-this.position.y));	
 		this.type = type;
+		this.isMoving = false;
+		this.alive = true;
 		this.setFile(file,70,73,10,1);
 		this.setFrameList([type]);
+		this.state = gamvas.state.getCurrentState();
 		this.rect = {x:this.position.x-30, y:this.position.y-30, w:60, h:60};
 		this.addState(new circleBrain("b"), true);
 		this.newPos = {x: x, y: y};
@@ -103,8 +108,9 @@ gameplay = gamvas.State.extend({
 		this.camera.setPosition(240,240);
 		this.clearColor = "rgba(0,0,0,0)";
 		this.table = new Array(new Array(),new Array(),new Array(),new Array(),new Array(),new Array());
+		this.level = 4;
 		this.numPieces = 0;
-		this.creationTime = 20;
+		this.creationTime = 1500;
 		this.elapsedTime = 0;
 		this.shadow = new gamvas.Image(this.resource.getImage("./img/shadow.png"));
 		this.back = new gamvas.Image(this.resource.getImage("./img/table.png"));
@@ -117,28 +123,6 @@ gameplay = gamvas.State.extend({
 			}			
 		}
 		this.table[0][0] = this.table[0][5] = this.table[5][0] = this.table[5][5] = null;
-
-		
-
-		/*this.circle = new circle("c1",120,120,this.pieces,Math.round(Math.random()*10)%10);
-		this.table[1][1].c = this.circle;
-		this.addActor(this.circle);
-		this.registerInputEvents(this.circle);
-
-		this.circle2 = new circle("c2",120,280,this.pieces,Math.round(Math.random()*10)%10);
-		this.table[1][3].c = this.circle2;
-		this.addActor(this.circle2);
-		this.registerInputEvents(this.circle2);
-
-		this.circle3 = new circle("c3",(3*80)+40,(1*80)+40,this.pieces,Math.round(Math.random()*10)%10);
-		this.table[3][1].c = this.circle3;
-		this.addActor(this.circle3);
-		this.registerInputEvents(this.circle3);
-
-		/*this.circle4 = new circle("c4",(4*80)+40,(4*80)+40,this.pieces,Math.round(Math.random()*10)%10);
-		this.table[4][4].c = this.circle4;
-		this.addActor(this.circle4);
-		this.registerInputEvents(this.circle4);*/
 	},
 	preDraw: function(){
 		this.back.draw();
@@ -156,11 +140,10 @@ gameplay = gamvas.State.extend({
 		pointsHud.innerHTML = gamvas.screen.getFPS();
 	},
 	draw:function(){
-		console.log("hey");
 		if(this.elapsedTime >= this.creationTime){
 			var i=0,j=0;
 
-			if(this.numPieces < 30){
+			if(this.numPieces < 10){
 				while((i==0 && j==0) ||
 						(i==5 && j==0) ||
 						(i==0 && j==5) ||
@@ -169,16 +152,16 @@ gameplay = gamvas.State.extend({
 					i = (Math.round(Math.random()*10))%6;
 					j = (Math.round(Math.random()*10))%6;	
 				}
-
-				this.table[i][j].c = new circle("c"+this.numPieces, (i*80)+40,(j*80)+40,this.pieces,Math.round(Math.random()*10)%9);
-				this.addActor(this.table[i][j].c);
 				this.numPieces++;
+				this.table[i][j].c = new circle("", (i*80)+40,(j*80)+40,this.pieces,Math.round(Math.random()*10)%this.level);
+				this.addActor(this.table[i][j].c);
 			}
 			this.elapsedTime = 0;
 		}else{
 			this.elapsedTime+=10;
-			console.log(this.elapsedTime);
 		}
+
+		this.verifyLine();
 	},
 	postDraw: function(){
 		this.shadow.draw();
@@ -190,12 +173,63 @@ gameplay = gamvas.State.extend({
 				a.y+a.h < b.y);
 	},
 
+	verifyLine: function(){
+
+		var equal; //bool to verify if the line is formed
+		for(var i = 1; i<5; i++){
+			equal = true;
+			for(var j = 1; j<4; j++){
+				if(this.table[i][j].c != null && this.table[i][j+1].c != null && !this.table[i][j].c.isMoving){
+					if(this.table[i][j].c.type != this.table[i][j+1].c.type){
+						equal = false;
+						j=4;
+					}
+				}else{
+					j = 4;
+					equal = false;
+				}
+			}
+
+			if(equal){
+				this.numPieces-=4;
+				for(var j = 1; j<5; j++){
+					this.table[i][j].c.alive = false;
+					this.table[i][j].c = null;
+				}
+			}
+		}
+
+		for(var j = 1; j<5; j++){
+			equal = true;
+			for(var i = 1; i<4; i++){
+				if(this.table[i][j].c != null && this.table[i+1][j].c != null && !this.table[i][j].c.isMoving){
+					if(this.table[i][j].c.type != this.table[i+1][j].c.type){
+						equal = false;
+						i=4;
+					}
+				}else{
+					i = 4;
+					equal = false;
+				}
+			}
+
+			if(equal){
+				this.numPieces-=4;
+				for(var i = 1; i<5; i++){
+					this.table[i][j].c.alive = false;
+					this.table[i][j].c = null;
+				}
+			}
+		}
+
+	},
 	onMouseUp: function(b){
 		if(b == gamvas.mouse.LEFT){
 			for(var i = 0; i<6; i++){
 				for(var j = 0; j<6;j++){
 					if(this.table[i][j]!= null){
 						if (this.table[i][j].c!=null &&							
+							!this.table[i][j].c.isMoving &&
 							this.collide(this.table[i][j],{x:gamvas.mouse.getX(), y:gamvas.mouse.getY(), w:1, h:1}))
 						{
 							if(this.actualPiece != null){
@@ -250,6 +284,7 @@ gameplay = gamvas.State.extend({
 							this.collide(this.table[i][j],{x:gamvas.mouse.getX(), y:gamvas.mouse.getY(), w:1, h:1})){
 							this.actualPiece.newPos.x = this.table[i][j].x+40;
 							this.actualPiece.newPos.y = this.table[i][j].y+40;
+							this.actualPiece.isMoving = true;
 							//this.actualPiece.setPosition(this.table[i][j].x+50,this.table[i][j].y+50);
 							this.table[i][j].c = this.actualPiece;
 							this.actualPiece = null;
