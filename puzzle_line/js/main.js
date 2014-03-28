@@ -1,18 +1,11 @@
 //Variables
 var doc=document,
-	scripts=["transitions.js"],
 	time = 300,
 	points = 0,
 	pointsHud = doc.getElementById("points"),
 	timeHud = doc.getElementById("time");
-
-
 timeHud.innerHTML = time;
 pointsHud.innerHTML = points;
-//Scripts load
-for(var i=0;i<scripts.length;i++){
-	doc.writeln("<scripts src='js/"+scripts[i]+"'></scripts>");
-}
 
 //Event Listeners
 window.addEventListener("load", function(){
@@ -43,6 +36,7 @@ circleBrain = gamvas.ActorState.extend({
 			if(this.actor.scaleFactor > 0){
 				this.actor.scale(-0.05);
 			}else{
+				this.actor.setScale(0);
 				this.actor.state.removeActor(this);
 			}	
 		}else{
@@ -116,6 +110,7 @@ gameplay = gamvas.State.extend({
 		this.back = new gamvas.Image(this.resource.getImage("./img/table.png"));
 		this.pieces = this.resource.getImage("./img/ball.svg");
 		this.active = new gamvas.Image(this.resource.getImage("./img/active.png"),0,0);
+		//this.sd = false;
 
 		for(var i =0; i<6; i++){
 			for(var j =0; j<6; j++){
@@ -125,8 +120,8 @@ gameplay = gamvas.State.extend({
 		this.table[0][0] = this.table[0][5] = this.table[5][0] = this.table[5][5] = null;
 	},
 	preDraw: function(){
-		this.back.draw();
-		
+	 	this.back.draw();
+
 
 		for(var i = 0; i<6; i++){
 			for(var j = 0; j<6;j++){
@@ -139,7 +134,7 @@ gameplay = gamvas.State.extend({
 
 		pointsHud.innerHTML = gamvas.screen.getFPS();
 	},
-	draw:function(){
+	draw:function(t){
 		if(this.elapsedTime >= this.creationTime){
 			var i=0,j=0;
 
@@ -162,9 +157,13 @@ gameplay = gamvas.State.extend({
 		}
 
 		this.verifyLine();
+
 	},
 	postDraw: function(){
-		this.shadow.draw();
+		if(!this.shadowDrawn){
+		 	this.shadow.draw();
+		 	this.shadowDrawn = true;
+		}
 	},
 	collide: function(a, b){
 		return !(a.x > b.x+b.w ||
