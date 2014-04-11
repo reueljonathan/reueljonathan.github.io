@@ -13,6 +13,8 @@
 }
 
 html, body{
+	position: absolute;
+	top:0;
 	width: 100%;
 	height: 100%;
 	background: #f4a408;
@@ -27,6 +29,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 footer{
+	padding: 5px 0px;
 	width: 100%;
 	position: absolute;
 	bottom: 0;
@@ -52,7 +55,7 @@ footer{
 	width: 15%;
 	height: 100%;
 	font-family: "pixelTitle";
-	font-size: 40px;
+	font-size: 30px;
 	z-index: 1;
 }
 
