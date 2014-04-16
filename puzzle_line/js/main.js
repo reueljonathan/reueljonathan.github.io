@@ -121,11 +121,13 @@ gameplay = gamvas.State.extend({
 		}
 		this.table[0][0] = this.table[0][5] = this.table[5][0] = this.table[5][5] = null;
 
-		//this.back.draw();
+		this.d = false;	
 	},
 	preDraw: function(){
-	 	this.back.draw();
-
+	 	if(!this.d){
+			this.d = true;
+			this.back.draw();
+		}
 
 		for(var i = 0; i<6; i++){
 			for(var j = 0; j<6;j++){
@@ -164,12 +166,12 @@ gameplay = gamvas.State.extend({
 		//numCalls++;
 
 	},
-	/*postDraw: function(){
+	postDraw: function(){
 		if(!this.shadowDrawn){
 		 	this.shadow.draw();
 		 	this.shadowDrawn = true;
 		}
-	},*/
+	},
 	collide: function(a, b){
 		return !(a.x > b.x+b.w ||
 				a.x+a.w < b.x ||
