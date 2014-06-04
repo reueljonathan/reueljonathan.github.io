@@ -39,6 +39,7 @@ circleBrain = gamvas.ActorState.extend({
 			}else{
 				this.actor.setScale(0);
 				this.actor.state.removeActor(this);
+				
 			}	
 		}else{
 			if(this.actor.scaleFactor < 1){
@@ -57,6 +58,8 @@ circleBrain = gamvas.ActorState.extend({
 			this.actor.move(0,10);
 		}else{
 			this.actor.isMoving = false;
+			this.actor.state.verifyLine();
+			console.log("chamei aqui");
 		}
 
 		if (this.actor.position.x > 240) {
@@ -95,6 +98,7 @@ circle = gamvas.Actor.extend({
 		this.resource = gamvas.state.getCurrentState().resource;
 		//this.shadow = new gamvas.Image(this.resource.getImage("./img/shadow.png"));
 		//this.shadow.position = new gamvas.Vector2D(this.position.x + 5, this.position.y + 5);*/
+		
 	}
 });
 
@@ -109,7 +113,7 @@ gameplay = gamvas.State.extend({
 		this.creationTime = 1500;
 		this.elapsedTime = 0;
 		this.shadow = new gamvas.Image(this.resource.getImage("./img/shadow.png"));
-		this.back = new gamvas.Image(this.resource.getImage("./img/bump.png"));
+		this.back = new gamvas.Image(this.resource.getImage("./img/table.png"));
 		this.pieces = this.resource.getImage("./img/pieces.png");
 		this.active = new gamvas.Image(this.resource.getImage("./img/active.png"),0,0);
 		//this.sd = false;
@@ -124,10 +128,10 @@ gameplay = gamvas.State.extend({
 		this.d = false;	
 	},
 	preDraw: function(){
-	 	if(!this.d){
-			this.d = true;
+	 	//if(!this.d){
+		//	this.d = true;
 			this.back.draw();
-		}
+		//}
 
 		for(var i = 0; i<6; i++){
 			for(var j = 0; j<6;j++){
@@ -165,12 +169,6 @@ gameplay = gamvas.State.extend({
 		//this.verifyLine();
 		//numCalls++;
 
-	},
-	postDraw: function(){
-		if(!this.shadowDrawn){
-		 	this.shadow.draw();
-		 	this.shadowDrawn = true;
-		}
 	},
 	collide: function(a, b){
 		return !(a.x > b.x+b.w ||
