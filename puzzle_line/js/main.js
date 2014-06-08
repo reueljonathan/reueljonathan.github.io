@@ -4,7 +4,8 @@ var doc=document,
 	points = 0,
 	pointsHud = doc.getElementById("points"),
 	timeHud = doc.getElementById("time"),
-	numCalls = 0;
+	numCalls = 0,
+	scale = 1;
 timeHud.innerHTML = time;
 pointsHud.innerHTML = points;
 
@@ -58,8 +59,6 @@ circleBrain = gamvas.ActorState.extend({
 			this.actor.move(0,10);
 		}else{
 			this.actor.isMoving = false;
-			this.actor.state.verifyLine();
-			console.log("chamei aqui");
 		}
 
 		if (this.actor.position.x > 240) {
@@ -98,7 +97,7 @@ circle = gamvas.Actor.extend({
 		this.resource = gamvas.state.getCurrentState().resource;
 		//this.shadow = new gamvas.Image(this.resource.getImage("./img/shadow.png"));
 		//this.shadow.position = new gamvas.Vector2D(this.position.x + 5, this.position.y + 5);*/
-		
+		this.setScale(1); //Se não der certo, tira a linha
 	}
 });
 
@@ -112,11 +111,14 @@ gameplay = gamvas.State.extend({
 		this.numPieces = 0;
 		this.creationTime = 1500;
 		this.elapsedTime = 0;
-		this.shadow = new gamvas.Image(this.resource.getImage("./img/shadow.png"));
 		this.back = new gamvas.Image(this.resource.getImage("./img/table.png"));
 		this.pieces = this.resource.getImage("./img/pieces.png");
 		this.active = new gamvas.Image(this.resource.getImage("./img/active.png"),0,0);
 		//this.sd = false;
+
+		this.back.setScale(1);
+		//this.pieces.setScale(1);
+		this.active.setScale(1);
 
 		for(var i =0; i<6; i++){
 			for(var j =0; j<6; j++){
@@ -136,7 +138,7 @@ gameplay = gamvas.State.extend({
 		for(var i = 0; i<6; i++){
 			for(var j = 0; j<6;j++){
 				if ( this.table[i][j]!= null && this.table[i][j].active) {
-					this.active.setPosition(i*80,j*80);
+					this.active.setPosition(i*80*scale,j*80*scale);
 					this.active.draw();
 				}
 			}
@@ -158,7 +160,7 @@ gameplay = gamvas.State.extend({
 					j = (Math.round(Math.random()*10))%6;	
 				}
 				this.numPieces++;
-				this.table[i][j].c = new circle("", (i*80)+40,(j*80)+40,this.pieces,Math.round(Math.random()*10)%10/*this.level*/);
+				this.table[i][j].c = new circle("", ((i*80)+40),((j*80)+40),this.pieces,Math.round(Math.random()*10)%10/*this.level*/);
 				this.addActor(this.table[i][j].c);
 			}
 			this.elapsedTime = 0;

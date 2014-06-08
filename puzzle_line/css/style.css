@@ -179,12 +179,3 @@ div{
 		top:480px;
 	}
 }
-
-#level{
-	position: absolute;
-	top:-600px;
-	opacity: 0;
-	webkit-animation: changeLevel 4s;	
-	moz-animation: changeLevel 4s;
-	animation: changeLevel 4s;
-}
