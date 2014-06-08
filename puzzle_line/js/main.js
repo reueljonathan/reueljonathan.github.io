@@ -1,13 +1,42 @@
+//Constants
+
+var constants = {
+	SIDE:0,
+	DEFINE: function(){
+		if(window.innerWidth < 240 || window.innerHeight < 240){
+			this.SIDE = 220;
+		}else if(window.innerWidth < 320  || window.innerHeight < 320){
+			this.SIDE = 300;
+		}else if(window.innerWidth < 480  || window.innerHeight < 480){
+			this.SIDE = 460;
+		}else if(window.innerWidth < 720  || window.innerHeight < 720){
+			this.SIDE = 700;
+		}else if(window.innerWidth < 768  || window.innerHeight < 768){
+			this.SIDE = 750;
+		}else if(window.innerWidth < 800  || window.innerHeight < 800){
+			this.SIDE = 780;
+		}else{
+			this.SIDE = 1060;
+		}
+
+		alert(this.SIDE);
+
+		var tag = document.getElementById("game");
+		tag.innerHTML = '<div id="gameCanvas" class="center"><canvas id="c" width='+this.SIDE+' height='+this.SIDE+'></canvas></div>';
+	}
+}
+
+constants.DEFINE();
+
 //Variables
 var doc=document,
 	time = 300,
 	points = 0,
 	pointsHud = doc.getElementById("points"),
 	timeHud = doc.getElementById("time"),
-	numCalls = 0,
-	scale = 1;
-timeHud.innerHTML = time;
-pointsHud.innerHTML = points;
+	numCalls = 0;
+//timeHud.innerHTML = time;
+//pointsHud.innerHTML = points;
 
 //Event Listeners
 window.addEventListener("load", function(){
@@ -104,10 +133,11 @@ circle = gamvas.Actor.extend({
 
 gameplay = gamvas.State.extend({
 	init: function(){
-		this.camera.setPosition(240,240);
+		this.sideSize = gamvas.getCanvasDimension().w; // size of one canvas' side, that is square. i.e., width == height
+		this.camera.setPosition(this.resize(2),this.resize(2));
 		this.clearColor = "rgba(0,0,0,0)";
 		this.table = new Array(new Array(),new Array(),new Array(),new Array(),new Array(),new Array());
-		this.level = 4;
+		this.level = 1;
 		this.numPieces = 0;
 		this.creationTime = 1500;
 		this.elapsedTime = 0;
@@ -116,41 +146,39 @@ gameplay = gamvas.State.extend({
 		this.active = new gamvas.Image(this.resource.getImage("./img/active.png"),0,0);
 		//this.sd = false;
 
+		//this.addActor(new circle("",0,0, this.pieces,3))
+
 		this.back.setScale(1);
 		//this.pieces.setScale(1);
 		this.active.setScale(1);
 
 		for(var i =0; i<6; i++){
 			for(var j =0; j<6; j++){
-				this.table[i].push({x: i*80, y:j*80, w:80, h:80, c:null, active: false});
+				this.table[i].push({x: i*this.resize(6), y:j*this.resize(6), w:this.resize(6), h:this.resize(6), c:null, active: false});
 			}			
 		}
 		this.table[0][0] = this.table[0][5] = this.table[5][0] = this.table[5][5] = null;
 
-		this.d = false;	
 	},
 	preDraw: function(){
-	 	//if(!this.d){
-		//	this.d = true;
-			this.back.draw();
-		//}
+		this.back.draw(); //Draws the table
 
-		for(var i = 0; i<6; i++){
+		for(var i = 0; i<6; i++){ //loop to draw the red square (houses for player's choose)
 			for(var j = 0; j<6;j++){
 				if ( this.table[i][j]!= null && this.table[i][j].active) {
-					this.active.setPosition(i*80*scale,j*80*scale);
+					this.active.setPosition(
+						i*this.resize(6),
+						j*this.resize(6));
 					this.active.draw();
 				}
 			}
 		}
-
-		pointsHud.innerHTML = gamvas.screen.getFPS();
 	},
 	draw:function(t){
-		if(this.elapsedTime >= this.creationTime){
+		if(this.elapsedTime >= this.creationTime){ // Time to create new pieces
 			var i=0,j=0;
 
-			if(this.numPieces < 25){
+			if(this.numPieces < 25){ 
 				while((i==0 && j==0) ||
 						(i==5 && j==0) ||
 						(i==0 && j==5) ||
@@ -160,7 +188,11 @@ gameplay = gamvas.State.extend({
 					j = (Math.round(Math.random()*10))%6;	
 				}
 				this.numPieces++;
-				this.table[i][j].c = new circle("", ((i*80)+40),((j*80)+40),this.pieces,Math.round(Math.random()*10)%10/*this.level*/);
+				this.table[i][j].c = new circle("", 
+					((i*this.resize(6))+this.resize(12)),
+					((j*this.resize(6))+this.resize(12)),
+					this.pieces,
+					Math.round(Math.random()*10)%10/*this.level*/);
 				this.addActor(this.table[i][j].c);
 			}
 			this.elapsedTime = 0;
@@ -168,7 +200,7 @@ gameplay = gamvas.State.extend({
 			this.elapsedTime+=10;
 		}
 
-		//this.verifyLine();
+		this.verifyLine();
 		//numCalls++;
 
 	},
@@ -229,6 +261,13 @@ gameplay = gamvas.State.extend({
 		}
 
 	},
+	
+	// helper to return the size of something :D
+	// proportional to the canvas dimensions
+	resize: function(numTimes){ 
+		return Math.floor(this.sideSize/numTimes);
+	},
+
 	onMouseUp: function(b){
 		if(b == gamvas.mouse.LEFT){
 			for(var i = 0; i<6; i++){
@@ -288,8 +327,8 @@ gameplay = gamvas.State.extend({
 								
 						}else if(this.table[i][j].active && 
 							this.collide(this.table[i][j],{x:gamvas.mouse.getX(), y:gamvas.mouse.getY(), w:1, h:1})){
-							this.actualPiece.newPos.x = this.table[i][j].x+40;
-							this.actualPiece.newPos.y = this.table[i][j].y+40;
+							this.actualPiece.newPos.x = this.table[i][j].x+this.resize(12);
+							this.actualPiece.newPos.y = this.table[i][j].y+this.resize(12);
 							this.actualPiece.isMoving = true;
 							//this.actualPiece.setPosition(this.table[i][j].x+50,this.table[i][j].y+50);
 							this.table[i][j].c = this.actualPiece;

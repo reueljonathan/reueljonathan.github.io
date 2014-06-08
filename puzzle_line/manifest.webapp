@@ -10,13 +10,15 @@
     "128": "/img/128x128.png",
     "256": "/img/256x256.png"
   },
-  "launch_path":"/index.html",
+  "launch_path": "/index.html",
   "developer": {
     "name": "Reuel Jonathan",
     "url": "http://fb.com/"
   },
-  "installs_allowed_from": ["*"],
+  "installs_allowed_from": [
+    "*"
+  ],
   "appcache_path": "/cache.manifest",
   "default_locale": "en",
-  "fullscreen":"true"
+  "fullscreen": "true"
 }
