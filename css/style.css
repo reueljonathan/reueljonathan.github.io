@@ -32,6 +32,8 @@ body{
 
 	display: grid;
 	grid-template-rows: 90px auto;
+
+	text-align: right;
 }
 
 .navigation > nav{
@@ -84,4 +86,28 @@ body{
 
 .skill.good{
 	color: #0f0;
+}
+
+
+@media (max-width: 700px){
+	.container{
+		display: flex;
+		flex-direction: column;
+	}
+
+	.header{
+		justify-content: center;
+	}
+
+	.navigation{
+		text-align: center;
+	}
+
+	.navigation > nav{
+		flex-direction: row;
+	}
+
+	.navigation > nav > a {
+		flex-grow: 1;
+	}
 }
