@@ -46,7 +46,8 @@ body{
 	color:#fff;
 }
 
-.navigation > nav > a:hover{
+.navigation > nav > a:hover,
+.navigation > nav > a.active{
 	color: #FC3563;
 }
 
