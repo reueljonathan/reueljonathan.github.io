@@ -57,7 +57,7 @@ a.active{
 
 .content{
 	grid-column: 2;
-    padding: 0 50px;
+    padding: 0 8%;
 }
 
 .header{
