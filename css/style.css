@@ -108,16 +108,6 @@ a.active{
 }
 
 .terminal-cursor{
-    position: relative;
-}
-
-.terminal-cursor::after{
-    content: "";
-    width: 1px;
-    height: 14px; 
-    background-color: #ffffff;
-    position: absolute;
-
     animation: cursor 1s step-end infinite;
     -webkit-animation: cursor 1s step-end infinite;
 }
