@@ -13,8 +13,24 @@ body{
 	color: #fff;
 }
 
-h1{
+h1, h2, h3, h4, h5, h6{
     font-weight: normal;
+}
+
+ul{
+    padding: 0;
+}
+
+li{
+    list-style: none;
+}
+
+li::before{
+    content:"-";
+}
+
+b{
+    color: #FC3563;
 }
 
 .padding-10{
@@ -46,7 +62,6 @@ h1{
 }
 
 a{
-	text-decoration: none;
 	color:#fff;
 }
 
