@@ -5,6 +5,10 @@ import Header from './components/Header';
 import Navbar from './components/Navbar';
 import profileImage from './img/profile-2019.png';
 
+import About from './components/About';
+import Projects from './components/Projects';
+import Skills from './components/Skills';
+
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 
@@ -12,7 +16,7 @@ const theme = {
    backgroundColor: '#292f36',
    colors: {
       primary: '#0197f6',
-      secondary: '#d9dedf',
+      secondary: '#fff',
    },
    fontFamily: 'Thasadith',
    h1: {
@@ -30,7 +34,9 @@ const Root = styled.div`
 `;
 
 const links = [
-   { href:'#about', text:'About' }
+   { href:'#about', text:'About' },
+   { href:'#projects', text:'Projects' },
+   { href:'#skills', text:'Skills' },
 ];
 
 function App(props){
@@ -39,7 +45,11 @@ function App(props){
          <Root>
             <Header imgSource={profileImage} />
             <Navbar links={links} />
-            Eae? beleuza?
+
+            <About id="about" />
+            <Projects id="projects" />
+            <Skills id="skills" />
+
          </Root>
       </ThemeProvider>
    );

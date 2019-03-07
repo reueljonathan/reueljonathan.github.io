@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'; 
+import Header1 from '../styled/Header1';
+import Header2 from '../styled/Header2';
 
 const FlexContainer = styled.div`
    display: flex;
@@ -8,18 +10,6 @@ const FlexContainer = styled.div`
    padding: 1em;
 
    font-family: ${props => props.theme.fontFamily}
-`;
-
-const Header1 = styled.h1`
-   margin: 0;
-   font-size: ${props => props.theme.h1.fontSize}
-   color: ${props => props.theme.colors.primary}
-`;
-
-const Header2 = styled.h2`
-   margin: 0;
-   font-size: ${props => props.theme.h2.fontSize}
-   color: ${props => props.theme.colors.primary}
 `;
 
 const ProfileImage = styled.img`
