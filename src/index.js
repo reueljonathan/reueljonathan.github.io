@@ -12,20 +12,7 @@ import Skills from './components/Skills';
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 
-const theme = {
-   backgroundColor: '#292f36',
-   colors: {
-      primary: '#0197f6',
-      secondary: '#fff',
-   },
-   fontFamily: 'Thasadith',
-   h1: {
-      fontSize: '1.4em'
-   },
-   h2: {
-      fontSize: '1em'
-   }
-};
+import theme from './styled/theme';
 
 const Root = styled.div`
    background-color: ${props => props.theme.backgroundColor};
@@ -46,7 +33,7 @@ function App(props){
             <Header imgSource={profileImage} />
             <Navbar links={links} />
 
-            <About id="about" />
+            <About id="about" width='24' height='24'/>
             <Projects id="projects" />
             <Skills id="skills" />
 

@@ -1,11 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import Paragraph from '../styled/Paragraph';
+import HeaderWithIcon from './HeaderWithIcon';
+import CodeIcon from '../svg/code.svg';
 
 export default function Projects(props){
    return (
       <React.Fragment>
-         <h1 id={props.id}>Projects</h1>
-         <p> Here are some of my projects </p>
+         <HeaderWithIcon id={props.id}
+            width='24'
+            height='24'
+            iconHref={`${CodeIcon}#code`}>
+            Projects
+         </HeaderWithIcon>
+         <Paragraph> Soon.</Paragraph>
       </React.Fragment>
    );
 }
