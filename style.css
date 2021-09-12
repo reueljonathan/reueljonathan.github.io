@@ -1,5 +1,6 @@
 :root {
     --background-color: #1d2021;
+    --background-color-2: #32302f;
     --font-1: #fbf1c7;
     --font-2: #ebdbb2;
     --font-3: #d5c4a1;
@@ -8,9 +9,55 @@
     --links:  #fabd2f;
 }
 
+/* Segoe UI font-family definitions (for windows) */
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 200;
+    src: local("Segoe UI Light");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 300;
+    src: local("Segoe UI Semilight");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 400;
+    src: local("Segoe UI");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 600;
+    src: local("Segoe UI Semibold");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-weight: 700;
+    src: local("Segoe UI Bold");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-style: italic;
+    font-weight: 400;
+    src: local("Segoe UI Italic");
+}
+@font-face {
+    font-family: "Segoe UI";
+    font-style: italic;
+    font-weight: 700;
+    src: local("Segoe UI Bold Italic");
+}
+
 * {
     margin: 0;
-    font-family: sans-serif;
+    font-family: "Helvetica", "Open Sans", "Segoe UI", sans-serif;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--background-color-2);
+    margin: 2em 0;
 }
 
 body {
@@ -22,6 +69,10 @@ body {
 
 a {
     color: var(--links);
+}
+
+li {
+    margin-bottom: 0.25em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -57,10 +108,6 @@ h5 {
 h6 {
     font-size: 1em;
     color: var(--font-5);
-}
-
-section {
-    margin-bottom: 3em;
 }
 
 p {
